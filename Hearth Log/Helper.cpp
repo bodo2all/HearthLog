@@ -18,7 +18,7 @@ wxFileName Helper::GetUserDataDir()
 
 void logVersion(const wxString &path, std::uint64_t version)
 {
-	wxLogVerbose("%s v%u.%u.%u.%u", path, 
+	wxLogVerbose("%s v%u.%u.%u.%u", path,
 		(std::uint16_t)(version >> 48),
 		(std::uint16_t)(version >> 32),
 		(std::uint16_t)(version >> 16),
@@ -40,7 +40,7 @@ std::uint64_t Helper::GetHearthstoneVersion()
 		wxLogError("couldn't find %s", path);
 		return 0;
 	}
-	
+
 	// Get the size of the FileVersionInfo object
 	DWORD verHandle = NULL;
 	DWORD verSize   = GetFileVersionInfoSize(path.t_str(), &verHandle);
@@ -91,7 +91,6 @@ bool Helper::FindHearthstone()
 	return true;
 }
 #endif
-
 #ifdef __APPLE__
 #include <wx/osx/core/cfstring.h>
 #include <wx/tokenzr.h>
@@ -167,4 +166,30 @@ bool Helper::FindHearthstone()
 	}
 	return true;
 }
+#else // not __APPLE__
+#ifndef _WIN32
+// Linux
+std::uint64_t Helper::GetHearthstoneVersion()
+{
+    return 1<<16*3 |
+           0<<16*2 |
+           0<<16   |
+           5170;
+}
+
+bool Helper::FindHearthstone()
+{
+	// If Hearthstone.app isn't in the default location, prompt until the user locates it for us.
+	while (!GetHearthstoneVersion()) {
+		auto app = wxFileSelector(_("Hearth Log: Please locate your Hearthstone game (Usually /Applications/Hearthstone/Hearthstone.app)"));
+		if (app.empty()) {
+			return false;
+		}
+
+		// Save the location for next time
+		Helper::WriteConfig("HearthstoneApp", app);
+	}
+	return true;
+}
+#endif // _WIN32
 #endif

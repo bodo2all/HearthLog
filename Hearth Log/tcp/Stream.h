@@ -39,7 +39,7 @@ private:
 	Stream *_other;
 	const uint32_t _firstSeq;
 	uint32_t _nextSeq;
-	std::map<uint32_t, const std::vector<const uint8_t>> _cache;
+	std::map<uint32_t, const std::vector<uint8_t>> _cache;
 
 	// This should come last so its constructor is called last and destructor is called first
 	const Parser::Callback::Ptr _callback;

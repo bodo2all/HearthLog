@@ -3,7 +3,7 @@
 
 #include "Stream.h"
 
-const std::vector<const uint8_t> EMPTY_VECTOR;
+const std::vector<uint8_t> EMPTY_VECTOR;
 
 tcp::Stream::Stream(Parser *parser, const EndpointPair &endpoints, Stream *other, int64_t nanotime, uint32_t seq)
 	: _parser(parser),
@@ -78,7 +78,7 @@ void tcp::Stream::Add(int64_t nanotime, uint32_t seq, std::range<const uint8_t *
 	}
 
 	// Data out of order so save it for later
-	_cache.emplace(seq, std::vector<const uint8_t>(data.begin(), data.end()));
+	_cache.emplace(seq, std::vector<uint8_t>(data.begin(), data.end()));
 }
 
 void tcp::Stream::Close(int64_t nanotime, uint32_t seq)

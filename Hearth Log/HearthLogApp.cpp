@@ -2,6 +2,9 @@
 #include <wx/frame.h>
 #include <wx/config.h>
 #include <wx/fileconf.h>
+#ifdef __linux__
+#include <wx/dirdlg.h>
+#endif
 
 #include "HearthLogApp.h"
 

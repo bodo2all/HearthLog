@@ -149,3 +149,13 @@ $RECYCLE.BIN/
 
 # Mac crap
 .DS_Store
+
+
+# Linux gcc
+*.o
+# Linux text editor temp files
+*~
+# Codeblocks project layout helper files
+*.layout
+
+

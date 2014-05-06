@@ -34,9 +34,10 @@
 
 #include <pcap.h>
 
-
-#ifdef MAC_OS_X_VERSION_MIN_REQUIRED
+#ifndef _WIN32
 #include <arpa/inet.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 #endif
 
 /*******************************************************************************************/
@@ -210,9 +211,9 @@ extern u_int32_t ip_finddst(const struct ip *);
 /*************************************************************************************************/
 
 
-
+#ifndef __linux__
 #define IPPROTO_TCP             6               /* tcp */
-
+#endif
 
 
 /*************************************************************************************************/

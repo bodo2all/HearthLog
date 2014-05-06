@@ -1,5 +1,8 @@
 // wx #includes must come first to prevent secure function warning from wxcrt.h
 #include <wx/filename.h>
+#ifdef __linux__
+#include <wx/filefn.h>
+#endif
 #include <wx/log.h>
 #include <wx/wfstream.h>
 #include <wx/zstream.h>
